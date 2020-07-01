@@ -1,0 +1,8 @@
+{
+    "appService.zipIgnorePattern": [
+        "node_modules{,/**}",
+        ".vscode{,/**}"
+    ],
+    "appService.defaultWebAppToDeploy": "/subscriptions/ede0af62-14e7-44fe-8077-d121a174f4a6/resourceGroups/appsvc_linux_centralus/providers/Microsoft.Web/sites/whatsinthebag",
+    "appService.deploySubpath": "."
+}
