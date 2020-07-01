@@ -1,8 +1,7 @@
 var MongoClient = require('mongodb').MongoClient;
 var url = 'mongodb://kshetty:wvwCuUFBOuyguqxGckfbFzl0pYr5KF1PCwfEABefzGFzTaUNUPEpkK7udGPFJ7I2n8NMuHW7i3wNMJzZDKOHMA==@kshetty.mongo.cosmos.azure.com:10255/?ssl=true&appName=@kshetty@';
 var findWords = function(db, resultWords, callback) {
-    var cursor =db.collection('words').find( );
-   
+    var cursor =db.collection('words').find({"type": "A"});
     cursor.each(function(err, doc) {
         if (doc != null) {
             console.dir(doc);

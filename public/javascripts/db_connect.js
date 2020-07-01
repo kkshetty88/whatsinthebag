@@ -2,18 +2,48 @@ var MongoClient = require('mongodb').MongoClient;
 var assert = require('assert');
 var ObjectId = require('mongodb').ObjectID;
 var url = 'mongodb://kshetty:wvwCuUFBOuyguqxGckfbFzl0pYr5KF1PCwfEABefzGFzTaUNUPEpkK7udGPFJ7I2n8NMuHW7i3wNMJzZDKOHMA==@kshetty.mongo.cosmos.azure.com:10255/?ssl=true&appName=@kshetty@';
-var words = ["Park", "Blood", "Umbrella"];
+var words = [];
+const fs = require('fs');
+const readline = require('readline');
+
+async function processLineByLine() {
+  const fileStream = fs.createReadStream('public/text/words.txt');
+
+  const rl = readline.createInterface({
+    input: fileStream,
+    crlfDelay: Infinity
+  });
+  // Note: we use the crlfDelay option to recognize all instances of CR LF
+  // ('\r\n') in input.txt as a single line break.
+
+  for await (const line of rl) {
+    // Each line in input.txt will be successively available here as `line`.
+    console.log(`Line from file: ${line}`);
+    words.push(line);
+  }
+}
+
+processLineByLine();
 
 var insertDocument = function(db, callback) {
+    var wordSet = new Set(words);
+    words = Array.from(wordSet);
+    var k = 0;
     for(i = 0; i < words.length; i++) {
-        db.collection('words').insertOne( {
-                "id": i,
-                "word": words[i]
-            }, function(err, result) {
-            assert.equal(err, null);
-            console.log("Inserted a document into the word collection.");
-            callback();
-        });
+        var type = String.fromCharCode(65+k);
+        for(j = 0; j < 40; j++) {
+            db.collection('words').insertOne( {
+                    "id": i,
+                    "word": words[i],
+                    "type": type
+                }, function(err, result) {
+                assert.equal(err, null);
+                console.log("Inserted a document into the word collection.");
+                callback();
+            });
+            i++;
+        }
+        k++;
     }
 };
 
