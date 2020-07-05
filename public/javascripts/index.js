@@ -166,6 +166,7 @@ window.onload = function () {
                         this.score = result.score;
                         this.currentTeam = result.currentTeam;
                         this.teamPlayers = result.teamPlayers;
+                        Cookies.set('words', this.wordsLeft);
                         postRequestOptions.body = JSON.stringify({
                             id: this.gameId,
                             players: result.players.concat(this.playerName),
@@ -249,6 +250,7 @@ window.onload = function () {
                     this.round++;
                     this.showPass = true;
                     this.wordsLeft = Cookies.get('words');
+                    this.currentWord = null;
                     this.endTurn();
                     return;
                 }
@@ -259,11 +261,7 @@ window.onload = function () {
             pass: function(event) {
                 this.wordsPassed.push(this.currentWord);
                 if (this.wordsLeft.length == 0) {
-                    alert("End of round "+ this.round);
-                    this.round++;
                     this.endTurn();
-                    this.wordsLeft = Cookies.get('words');
-                    this.showPass = true;
                     return;
                 }
                 this.currentWord = this.wordsLeft.pop();
@@ -275,6 +273,9 @@ window.onload = function () {
                     alert("End of round "+ this.round);
                     this.round++;
                     this.wordsLeft = Cookies.get('words').split(',');
+                    this.currentWord = null;
+                    this.showPass = true;
+                    this.score[this.currentTeam]++;
                     this.endTurn();
                     return;
                 }
@@ -290,6 +291,10 @@ window.onload = function () {
                 console.log(this.wordsLeft);
                 console.log(this.wordsPassed);
                 this.wordsLeft = this.wordsLeft.concat(this.wordsPassed);
+                this.wordsPassed = [];
+                if (this.currentWord != null) {
+                    this.wordsLeft.push(this.currentWord);
+                }
                 this.wordsLeft = shuffleArray(this.wordsLeft);
                 postRequestOptions.body = JSON.stringify({
                     words_left: this.wordsLeft,
