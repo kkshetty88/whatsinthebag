@@ -84,7 +84,7 @@
                     Team {{winner}} Wins!
                 </div>
                 <div v-if="!isGameEnded" class="flex-row">
-                    Next Turn: Team {{currentTeam}} 
+                    Next Turn: Team {{currentTeam}} Round {{round}}
                 </div>
                 <div class="flex-row pt2"><button v-if="!isGameEnded" v-on:click="beginGame" type="button" class="btn btn-primary">Resume!</button><button v-on:click="clearCookies" type="button" class="btn btn-primary">Exit</button></div>
             </div>
