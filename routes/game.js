@@ -61,7 +61,8 @@ module.exports = function(app) {  //receiving "app" instance
                     "score": body.score,
                     "currentTeam": body.currentTeam,
                     "players": body.players,
-                    "round": body.round
+                    "round": body.round,
+                    "teamPlayers": body.teamPlayers
                 }},
                 {
                     upsert: true

@@ -58,13 +58,15 @@ window.onload = function () {
             currentTeam: 'A',
             showScores: false,
             players: [],
+            teamPlayers: {'A': [], 'B': []},
             showCreateTeams: false,
             isAdmin: false,
             isLoading: false,
             timeLeft: {message: ''},
             timerHandle: null,
             isGameEnded: false,
-            winner: ''
+            winner: '',
+            selected: {}
         }
     };
     var app = new Vue({
@@ -83,6 +85,36 @@ window.onload = function () {
             joinGame: function(event) {
                 this.isWelcomeHidden = true;
                 this.isJoinGameHidden = false;
+            },
+            submitTeams: function(event) {
+                Object.keys(this.selected).forEach(key => {
+                    console.log(this.selected[key]);
+                    if(this.selected[key] === 'B') {
+                        this.teamPlayers['B'].push(key);
+                    } else {
+                        this.teamPlayers['A'].push(key);
+                    }
+                });
+                this.isLoading = true;
+                postRequestOptions.body = JSON.stringify({
+                    words_left: this.wordsLeft,
+                    words_guessed: [],
+                    words_passed: [],
+                    round: 1,
+                    score: this.score,
+                    currentTeam: this.currentTeam,
+                    players: [this.playerName],
+                    teamPlayers: this.teamPlayers,
+                    id: this.gameId
+                })
+                fetch(GAME_URL, postRequestOptions)
+                    .then(response => response.json())
+                    .then(data => {
+                        this.gameId = data.id;
+                        this.gameDescription = 'Game '+this.gameId+' in progress. Please let others know';
+                        Cookies.set('game_id', this.gameId);
+                        this.isLoading = false;
+                    });
             },
             enterGame: function(event) {
                 this.isLoading = true;
@@ -104,7 +136,8 @@ window.onload = function () {
                             round: 1,
                             score: this.score,
                             currentTeam: this.currentTeam,
-                            players: [this.playerName]
+                            players: [this.playerName],
+                            teamPlayers: this.teamPlayers,
                         })
                         fetch(GAME_URL, postRequestOptions)
                             .then(response => response.json())
@@ -132,6 +165,7 @@ window.onload = function () {
                         this.wordsLeft = result.words_left;
                         this.score = result.score;
                         this.currentTeam = result.currentTeam;
+                        this.teamPlayers = result.teamPlayers;
                         postRequestOptions.body = JSON.stringify({
                             id: this.gameId,
                             players: result.players.concat(this.playerName),
@@ -140,7 +174,8 @@ window.onload = function () {
                             words_passed: [],
                             round: result.round,
                             score: this.score,
-                            currentTeam: this.currentTeam
+                            currentTeam: this.currentTeam,
+                            teamPlayers: this.teamPlayers
                         })
                         fetch(GAME_URL, postRequestOptions)
                             .then(response => response.json())
@@ -182,6 +217,7 @@ window.onload = function () {
                     });
             },
             beginGame: function(event) {
+                console.log(this.selected[this.playerName]);
                 this.isLoading = true;
                 fetch(GAME_URL+'/'+this.gameId)
                     .then(response => response.json())
@@ -193,6 +229,8 @@ window.onload = function () {
                         this.score = result.score;
                         this.currentTeam = result.currentTeam;
                         this.round = result.round;
+                        this.teamPlayers = result.teamPlayers;
+                        console.log(this.teamPlayers);
                         if (this.round >= 4) {
                             this.endTurn();
                         }
@@ -260,7 +298,8 @@ window.onload = function () {
                     round: this.round,
                     id: this.gameId,
                     score: this.score,
-                    currentTeam: this.currentTeam
+                    currentTeam: this.currentTeam,
+                    teamPlayers: this.teamPlayers,
                 })
                 fetch(GAME_URL, postRequestOptions)
                     .then(response => response.json())
