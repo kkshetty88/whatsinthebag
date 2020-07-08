@@ -68,8 +68,8 @@
             </div>
             <div class="flex flex-column" v-if="showWords">
                 <div class="flex-row full-width">
-                    <div class="xx-large flex-grow-1 col-md-4">
-                        {{currentWord}}
+                    <div class="card card-header ml-2 mt-2 text-center xx-large flex-grow-1 col-md-4">
+                        <span class="align-middle card-body">{{currentWord}}</span>
                     </div>
                     <div class="pl2 flex-grow-4">
                         <div class="flex-row col-md-4 my-2"><button v-on:click="correct" type="button" class="btn btn-primary w-100">Correct</button></div>
@@ -85,12 +85,12 @@
             </div>
             <div v-if="showScores" class="flex-column xx-large ml-2">
                 <div class="flex-row">
-                    <div class="flex-grow-1">Team A {{teamPlayers['A'].join(', ') }}</div>
-                    <div class="flex-grow-1">Team B {{teamPlayers['B'].join(', ')}}</div>
+                    <div class="col-md-6">Team A {{teamPlayers['A'].join(', ') }}</div>
+                    <div class="col-md-6">Team B {{teamPlayers['B'].join(', ')}}</div>
                 </div>
                 <div class="flex-row">
-                    <div class="flex-grow-1">{{score['A']}}</div>
-                    <div class="flex-grow-1">{{score['B']}}</div>
+                    <div class="col-md-6">{{score['A']}}</div>
+                    <div class="col-md-6">{{score['B']}}</div>
                 </div>
                 <div v-if="isGameEnded" class="flex-row">
                     Team {{winner}} Wins!

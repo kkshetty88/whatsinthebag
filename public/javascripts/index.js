@@ -197,6 +197,8 @@ window.onload = function () {
                     this.isGameInProgress = false;
                     this.showCreateTeams = false;
                     this.showScores = false;
+                    this.teamPlayers =  {'A': [], 'B': []};
+                    this.players = [];
                 }
             },
             clearCookies: function(event) {
