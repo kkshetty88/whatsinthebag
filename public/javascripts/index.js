@@ -212,6 +212,28 @@ window.onload = function () {
                 Cookies.remove('words');
                 this.refreshPage();
             },
+            switchNextTurn: function(event) {
+                this.toggleTeam();
+                this.isLoading = true;
+                postRequestOptions.body = JSON.stringify({
+                    words_left: this.wordsLeft,
+                    words_guessed: [],
+                    words_passed: [],
+                    round: this.round,
+                    id: this.gameId,
+                    score: this.score,
+                    currentTeam: this.currentTeam,
+                    teamPlayers: this.teamPlayers,
+                })
+                fetch(GAME_URL, postRequestOptions)
+                    .then(response => response.json())
+                    .then(data => {
+                        this.gameId = data.id;
+                        this.gameDescription = 'Game '+this.gameId+' in progress. Please wait for your turn';
+                        this.isLoading = false;
+                        this.timesUp = false;
+                    });
+            },
             createTeams: function(event) {
                 this.isLoading = true;
                 this.isGameInProgress = false;
