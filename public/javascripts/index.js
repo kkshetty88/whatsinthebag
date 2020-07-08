@@ -287,6 +287,7 @@ window.onload = function () {
                 this.toggleTeam();
                 clearInterval(this.timerHandle);
                 this.showScores = true;
+                this.showPass = true;
                 this.showWords = false;
                 console.log(this.wordsLeft);
                 console.log(this.wordsPassed);
