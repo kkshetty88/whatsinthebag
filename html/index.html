@@ -2,7 +2,19 @@
 <html lang="en-US">
 <head>
 <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<!-- Load required Bootstrap and BootstrapVue CSS -->
+<link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap/dist/css/bootstrap.min.css" />
+<link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.css" />
+
+<!-- Load polyfills to support older browsers -->
+<script src="//polyfill.io/v3/polyfill.min.js?features=es2015%2CIntersectionObserver" crossorigin="anonymous"></script>
+
+<!-- Load Vue followed by BootstrapVue -->
+<script src="//unpkg.com/vue@latest/dist/vue.min.js"></script>
+<script src="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.js"></script>
+
+<!-- Load the following for BootstrapVueIcons support -->
+<script src="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue-icons.min.js"></script>
 <script src="javascripts/index.js"></script>
 <link rel="stylesheet" type="text/css" href="stylesheets/custom.css">
 </head>
@@ -11,27 +23,27 @@
         <div v-if="isLoading" class="loader">
         </div>
         <div v-if="!isLoading">
-            <div class="flex welcomeDiv" v-if="!isWelcomeHidden">
-                <div class="flex-row">Welcome to whats in the bag!!!</div>
-                <div class="flex-row">
+            <div class="welcomeDiv" v-if="!isWelcomeHidden">
+                <div><h2 class="text-center">Welcome to whats in the bag!!!</h2></div>
+                <div class="pt-4 text-center">
                     <button v-on:click="startNew" type="button" class="btn btn-primary">Start a new game</button>
-                    <button v-on:click="joinGame" type="button" class="btn btn-primary">Join a game</button>
+                    <button v-on:click="joinGame" type="button" class="btn btn-primary ml-2">Join a game</button>
                 </div>
             </div>
             <div class="flex enterGameDiv" v-if="!isStartGameHidden">
-                <div class="flex-row">
-                <span>Name</span> 
-                <input v-model="playerName" type="text" class="form-control">
-                <button v-on:click="enterGame" type="button">Enter</button>
+                <div class="flex-row pt-4">
+                <span class="col-md-3">PlayerName</span> 
+                <input v-model="playerName" type="text" class="form-control ml-3">
+                <button v-on:click="enterGame" type="button" class="ml-3">Enter</button>
                 </div>
             </div>
             <div class="flex enterGameDiv" v-if="!isJoinGameHidden">
-                <div class="flex-row">
-                <span>Name</span> 
-                <input v-model="playerName" type="text" class="form-control">
-                <span>Game Id</span> 
-                <input v-model="gameId" type="text" class="form-control">
-                <button v-on:click="enterGameGuest" type="button">Enter</button>
+                <div class="flex-row pt-4">
+                <span class="col-md-2 mt-1">PlayerName</span> 
+                <input v-model="playerName" type="text" class="form-control col-md-3">
+                <span class="mx-2 mt-1">GameId</span> 
+                <input v-model="gameId" type="text" class="form-control col-md-3">
+                <button v-on:click="enterGameGuest" type="button" class="col-md-2 ml-3">Enter</button>
                 </div>
             </div>
             <div class="flex" v-if="isGameInProgress">
