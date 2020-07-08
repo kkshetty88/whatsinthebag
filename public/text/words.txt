@@ -157,3 +157,148 @@ lowly
 measly
 telephone
 punishment
+angel
+eyeball
+pizza
+angry
+fireworks
+pumpkin
+baby
+flower
+rainbow
+beard
+flying saucer
+recycle
+bible
+giraffe
+sand castle
+bikini
+glasses
+snowflake
+book
+high heel
+stairs
+bucket
+ice cream cone
+starfish
+bumble bee
+igloo
+strawberry
+butterfly
+lady bug
+sun
+camera
+lamp
+tire
+cat
+lion
+toast
+church
+mailbox
+toothbrush
+crayon
+night
+toothpaste
+dolphin
+nose
+truck
+egg
+olympics
+volleyball
+eiffel tower
+peanut
+cinderella
+baker
+thief
+leprechaun
+robin hood
+vampire	
+tv
+bed
+phone
+doll
+trash can
+skateboard
+sleep
+sad
+airplane
+nose
+eyes
+apple
+sun
+sandwich
+cherry
+bubble
+moon
+snow
+candy
+roof
+laptop
+kite
+leash
+gorilla
+fire
+nail polish
+quesadilla
+earthquake
+rubber band
+sidewalk
+minion
+keychain
+electricity
+headphones
+cereal
+car
+train
+bus
+airplane
+purse
+hot dog
+mario
+goldfish
+chips
+oreos
+fish sticks
+potato
+carrot
+milkshake
+corn
+eggplant
+chocolate
+milk
+spaghetti
+burger
+taco
+french fries
+pickle
+waffle
+french toast
+dog
+mouth
+milk
+duck
+skateboard
+bird
+mouse
+whale
+jacket
+shirt
+hippo
+beach
+cookie
+cheese
+skip
+drum
+worm
+spider
+bridge
+bell
+jellyfish
+bunny
+truck
+monkey
+bread
+bracelet
+alligator
+bat
+clock
