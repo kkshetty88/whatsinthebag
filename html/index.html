@@ -20,8 +20,9 @@
 </head>
 <body>
     <div id="app">
-        <div v-if="isLoading" class="loader">
-        </div>
+        <div v-cloak>
+        <div v-if="isLoading && !timesUp" class="loader"></div>
+        <div v-if="isLoading && timesUp" class="timesup-loader"></div>
         <div v-if="!isLoading">
             <div class="welcomeDiv" v-if="!isWelcomeHidden">
                 <div><h2 class="text-center">Welcome to whats in the bag!!!</h2></div>
@@ -95,12 +96,13 @@
                 <div v-if="isGameEnded" class="flex-row">
                     Team {{winner}} Wins!
                 </div>
-                <div v-if="!isGameEnded" class="flex-row">
-                    Next Turn: Team {{currentTeam}} Round {{round}}
+                <div v-if="!isGameEnded" class="col-md-12">
+                    <h5>Next Turn: Team {{currentTeam}} Round {{round}}</h5>
                 </div>
                 <div class="flex-row pt2"><button v-if="!isGameEnded" v-on:click="beginGame" type="button" class="btn btn-primary mx-2">Resume!</button><button v-on:click="clearCookies" type="button" class="btn btn-primary mx-2">Exit</button></div>
             </div>
         </div>
+    </div>
     </div>
 </body>
 

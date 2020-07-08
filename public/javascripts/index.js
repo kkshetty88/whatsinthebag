@@ -13,7 +13,7 @@ window.onload = function () {
             display.message = minutes + ":" + seconds;
             timer--;
             if (timer == 0) {
-                endFunction();
+                endFunction(null, true);
             }
         }, 1000);
     }
@@ -66,7 +66,8 @@ window.onload = function () {
             timerHandle: null,
             isGameEnded: false,
             winner: '',
-            selected: {}
+            selected: {},
+            timesUp: false
         }
     };
     var app = new Vue({
@@ -117,6 +118,10 @@ window.onload = function () {
                     });
             },
             enterGame: function(event) {
+                if (!this.playerName) {
+                    alert('Name is required');
+                    return;
+                }
                 this.isLoading = true;
                 Cookies.set('player_name', this.playerName);
                 this.isWelcomeHidden = true;
@@ -284,8 +289,10 @@ window.onload = function () {
                 this.currentWord = this.wordsLeft.pop();
                 this.score[this.currentTeam]++;
             },
-            endTurn: function(event) {
+            endTurn: function(event, timesUp = false) {
+                console.log(timesUp);
                 this.isLoading = true;
+                this.timesUp = timesUp;
                 this.toggleTeam();
                 clearInterval(this.timerHandle);
                 this.showScores = true;
@@ -315,6 +322,7 @@ window.onload = function () {
                         this.gameId = data.id;
                         this.gameDescription = 'Game '+this.gameId+' in progress. Please wait for your turn';
                         this.isLoading = false;
+                        this.timesUp = false;
                     });
                 if (this.round >= 4) {
                     this.isGameEnded = true;
