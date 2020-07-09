@@ -73,7 +73,8 @@ window.onload = function () {
             winner: '',
             selected: {},
             timesUp: false,
-            isTimeEnding: false
+            isTimeEnding: false,
+            allWords: []
         }
     };
     var app = new Vue({
@@ -100,6 +101,7 @@ window.onload = function () {
                             this.round = result.round;
                             this.teamPlayers = result.teamPlayers;
                             this.currentTeam = result.currentTeam;
+                            this.allWords = result.all_words;
                             if (result.round >= 4) {
                                 this.gameDescription = 'Game '+this.gameId+' in progress. Please wait for your turn';
                                 this.wordsLeft = result.words_left;
@@ -137,7 +139,8 @@ window.onload = function () {
                     currentTeam: this.currentTeam,
                     players: [this.playerName],
                     teamPlayers: this.teamPlayers,
-                    id: this.gameId
+                    id: this.gameId,
+                    all_words: this.allWords
                 })
                 fetch(GAME_URL, postRequestOptions)
                     .then(response => response.json())
@@ -163,6 +166,7 @@ window.onload = function () {
                     .then(response => response.json())
                     .then(result => {
                         this.wordsLeft = result;
+                        this.allWords = result;
                         Cookies.set('words', result);
                         console.log(this.wordsLeft);
                         postRequestOptions.body = JSON.stringify({
@@ -174,6 +178,7 @@ window.onload = function () {
                             currentTeam: this.currentTeam,
                             players: [this.playerName],
                             teamPlayers: this.teamPlayers,
+                            all_words: this.allWords
                         })
                         fetch(GAME_URL, postRequestOptions)
                             .then(response => response.json())
@@ -202,6 +207,7 @@ window.onload = function () {
                         this.score = result.score;
                         this.currentTeam = result.currentTeam;
                         this.teamPlayers = result.teamPlayers;
+                        this.allWords = result.all_words;
                         Cookies.set('words', this.wordsLeft);
                         postRequestOptions.body = JSON.stringify({
                             id: this.gameId,
@@ -212,7 +218,8 @@ window.onload = function () {
                             round: result.round,
                             score: this.score,
                             currentTeam: this.currentTeam,
-                            teamPlayers: this.teamPlayers
+                            teamPlayers: this.teamPlayers,
+                            all_words: this.allWords
                         })
                         fetch(GAME_URL, postRequestOptions)
                             .then(response => response.json())
@@ -241,6 +248,7 @@ window.onload = function () {
                 Cookies.remove('player_name');
                 Cookies.remove('game_id');
                 Cookies.remove('words');
+                clearInterval(this.polling);
                 this.refreshPage();
             },
             switchNextTurn: function(event) {
@@ -255,6 +263,7 @@ window.onload = function () {
                     score: this.score,
                     currentTeam: this.currentTeam,
                     teamPlayers: this.teamPlayers,
+                    all_words: this.allWords
                 })
                 fetch(GAME_URL, postRequestOptions)
                     .then(response => response.json())
@@ -291,6 +300,7 @@ window.onload = function () {
                         this.currentTeam = result.currentTeam;
                         this.round = result.round;
                         this.teamPlayers = result.teamPlayers;
+                        this.allWords = result.all_words;
                         console.log(this.teamPlayers);
                         if (this.round >= 4) {
                             this.endTurn();
@@ -305,21 +315,6 @@ window.onload = function () {
             },
             changeColor: function(event, value) {
                 this.isTimeEnding = value;
-            },
-            resumeGame: function(event) {
-                this.wordsLeft = this.wordsLeft.concat(this.wordsPassed);
-                if (this.wordsLeft.length == 0) {
-                    alert("End of round "+ this.round);
-                    this.round++;
-                    this.showPass = true;
-                    this.wordsLeft = Cookies.get('words');
-                    this.currentWord = null;
-                    this.endTurn();
-                    return;
-                }
-                this.showWords = true;
-                this.wordsLeft = shuffleArray(this.wordsLeft);
-                this.currentWord = this.wordsLeft.pop();
             },
             pass: function(event) {
                 this.wordsPassed.push(this.currentWord);
@@ -378,6 +373,7 @@ window.onload = function () {
                     score: this.score,
                     currentTeam: this.currentTeam,
                     teamPlayers: this.teamPlayers,
+                    all_words: this.allWords
                 })
                 fetch(GAME_URL, postRequestOptions)
                     .then(response => response.json())
