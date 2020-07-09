@@ -84,9 +84,6 @@ window.onload = function () {
         },
         mounted: function(){
             this.refreshPage();
-            this.polling = setInterval(function () {
-                this.loadData();
-              }.bind(this), 2000);
         },
         beforeDestroy: function() {
             clearInterval(this.polling);
@@ -115,10 +112,16 @@ window.onload = function () {
             startNew: function (event) {
                 this.isWelcomeHidden = true;
                 this.isStartGameHidden = false;
+                this.polling = setInterval(function () {
+                    this.loadData();
+                  }.bind(this), 2000);
             },
             joinGame: function(event) {
                 this.isWelcomeHidden = true;
                 this.isJoinGameHidden = false;
+                this.polling = setInterval(function () {
+                    this.loadData();
+                  }.bind(this), 2000);
             },
             submitTeams: function(event) {
                 Object.keys(this.selected).forEach(key => {
@@ -129,6 +132,8 @@ window.onload = function () {
                         this.teamPlayers['A'].push(key);
                     }
                 });
+                console.log("SHETTY");
+                console.log(this.teamPlayers);
                 this.isLoading = true;
                 postRequestOptions.body = JSON.stringify({
                     words_left: this.wordsLeft,
@@ -249,6 +254,7 @@ window.onload = function () {
                 Cookies.remove('game_id');
                 Cookies.remove('words');
                 clearInterval(this.polling);
+                Object.assign(this.$data, initialState());
                 this.refreshPage();
             },
             switchNextTurn: function(event) {
@@ -337,7 +343,7 @@ window.onload = function () {
                 else if (this.wordsLeft.length == 0) {
                     alert("End of round "+ this.round);
                     this.round++;
-                    this.wordsLeft = Cookies.get('words').split(',');
+                    this.wordsLeft = this.allWords;
                     this.currentWord = null;
                     this.showPass = true;
                     this.score[this.currentTeam]++;
@@ -387,6 +393,7 @@ window.onload = function () {
                     });
                 if (this.round >= 4) {
                     this.isGameEnded = true;
+                    this.finalScore = this.score;
                     clearInterval(this.polling);
                     if (this.score['A'] > this.score['B']) {
                         this.winner = 'A';
