@@ -80,7 +80,7 @@
                     <div class="pl2 flex-grow-1">
                         <div class="flex-row">Round {{round}}</div>
                         <div class="flex-row">Team {{currentTeam}} Score: {{score[currentTeam]}}</div>
-                        <div class="flex-row">{{timeLeft.message}}</div>
+                        <div class="flex-row" v-bind:class="{ 'text-danger': isTimeEnding}">{{timeLeft.message}}</div>
                     </div>
                 </div>
             </div>

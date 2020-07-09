@@ -1,7 +1,7 @@
 window.onload = function () {
     const WORD_URL = "/listWords";
     const GAME_URL = "/games";
-    var startTimer = function(duration, display, endFunction) {
+    var startTimer = function(duration, display, endFunction, changeColor) {
         var timer = duration, minutes, seconds;
         return setInterval(function () {
             minutes = parseInt(timer / 60, 10);
@@ -12,7 +12,11 @@ window.onload = function () {
     
             display.message = minutes + ":" + seconds;
             timer--;
+            if (timer < 10) {
+                changeColor(null, true);
+            }
             if (timer == 0) {
+                changeColor(null, false);
                 endFunction(null, true);
             }
         }, 1000);
@@ -67,7 +71,8 @@ window.onload = function () {
             isGameEnded: false,
             winner: '',
             selected: {},
-            timesUp: false
+            timesUp: false,
+            isTimeEnding: false
         }
     };
     var app = new Vue({
@@ -270,7 +275,10 @@ window.onload = function () {
                 this.showWords = true;
                 this.showScores = false;
                 this.showCreateTeams = false;
-                this.timerHandle = startTimer(60, this.timeLeft, this.endTurn);
+                this.timerHandle = startTimer(60, this.timeLeft, this.endTurn, this.changeColor);
+            },
+            changeColor: function(event, value) {
+                this.isTimeEnding = value;
             },
             resumeGame: function(event) {
                 this.wordsLeft = this.wordsLeft.concat(this.wordsPassed);
@@ -343,8 +351,10 @@ window.onload = function () {
                     .then(data => {
                         this.gameId = data.id;
                         this.gameDescription = 'Game '+this.gameId+' in progress. Please wait for your turn';
-                        this.isLoading = false;
-                        this.timesUp = false;
+                        setTimeout(function() {
+                            this.isLoading = false;
+                            this.timesUp = false;
+                        }.bind(this), 1000); 
                     });
                 if (this.round >= 4) {
                     this.isGameEnded = true;
