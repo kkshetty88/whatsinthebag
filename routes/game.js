@@ -60,6 +60,7 @@ module.exports = function(app) {  //receiving "app" instance
                     "round": body.round,
                     "score": body.score,
                     "currentTeam": body.currentTeam,
+                    "currentPlayer": body.currentPlayer,
                     "players": body.players,
                     "round": body.round,
                     "teamPlayers": body.teamPlayers,

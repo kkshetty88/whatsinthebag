@@ -100,7 +100,7 @@
                     <img class="ml-2 mt-2" src="https://media.giphy.com/media/g9582DNuQppxC/giphy.gif" />
                 </div>
                 <div v-if="!isGameEnded" class="col-md-12">
-                    <h5>Next Turn: Team {{currentTeam}} Round {{round}}</h5>
+                    <h5>Next Turn: Team {{currentTeam}} {{currentPlayer}} Round {{round}}</h5>
                 </div>
                 <div class="flex-row pt2"><button v-if="!isGameEnded" v-on:click="beginGame" type="button" class="btn btn-primary mx-2">Resume!</button><button v-if="!isGameEnded" v-on:click="switchNextTurn" type="button" class="btn btn-primary mx-2">Switch Next Turn!</button><button v-on:click="clearCookies" type="button" class="btn btn-primary mx-2">Exit</button></div>
             </div>

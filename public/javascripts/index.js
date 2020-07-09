@@ -61,6 +61,7 @@ window.onload = function () {
             finalScore: { 'A': 0, 'B': 0},
             round: 1,
             currentTeam: 'A',
+            currentPlayer: '',
             showScores: false,
             players: [],
             teamPlayers: {'A': [], 'B': []},
@@ -98,6 +99,7 @@ window.onload = function () {
                             this.round = result.round;
                             this.teamPlayers = result.teamPlayers;
                             this.currentTeam = result.currentTeam;
+                            this.currentPlayer = result.currentPlayer;
                             this.allWords = result.all_words;
                             if (result.round >= 4) {
                                 this.gameDescription = 'Game '+this.gameId+' in progress. Please wait for your turn';
@@ -135,6 +137,8 @@ window.onload = function () {
                 console.log("SHETTY");
                 console.log(this.teamPlayers);
                 this.isLoading = true;
+                this.currentPlayer = this.teamPlayers[this.currentTeam].shift();
+                this.teamPlayers[this.currentTeam].push(this.currentPlayer);
                 postRequestOptions.body = JSON.stringify({
                     words_left: this.wordsLeft,
                     words_guessed: [],
@@ -142,6 +146,7 @@ window.onload = function () {
                     round: this.round,
                     score: this.score,
                     currentTeam: this.currentTeam,
+                    currentPlayer: this.currentPlayer,
                     players: [this.playerName],
                     teamPlayers: this.teamPlayers,
                     id: this.gameId,
@@ -259,6 +264,8 @@ window.onload = function () {
             },
             switchNextTurn: function(event) {
                 this.toggleTeam();
+                this.currentPlayer = this.teamPlayers[this.currentTeam].shift();
+                this.teamPlayers[this.currentTeam].push(this.currentPlayer);
                 this.isLoading = true;
                 postRequestOptions.body = JSON.stringify({
                     words_left: this.wordsLeft,
@@ -268,6 +275,7 @@ window.onload = function () {
                     id: this.gameId,
                     score: this.score,
                     currentTeam: this.currentTeam,
+                    currentPlayer: this.currentPlayer,
                     teamPlayers: this.teamPlayers,
                     all_words: this.allWords
                 })
@@ -304,6 +312,7 @@ window.onload = function () {
                         this.currentWord = this.wordsLeft.pop();
                         this.score = result.score;
                         this.currentTeam = result.currentTeam;
+                        this.currentPlayer = result.currentPlayer;
                         this.round = result.round;
                         this.teamPlayers = result.teamPlayers;
                         this.allWords = result.all_words;
@@ -370,6 +379,8 @@ window.onload = function () {
                     this.wordsLeft.push(this.currentWord);
                 }
                 this.wordsLeft = shuffleArray(this.wordsLeft);
+                this.currentPlayer = this.teamPlayers[this.currentTeam].shift();
+                this.teamPlayers[this.currentTeam].push(this.currentPlayer);
                 postRequestOptions.body = JSON.stringify({
                     words_left: this.wordsLeft,
                     words_guessed: [],
@@ -378,6 +389,7 @@ window.onload = function () {
                     id: this.gameId,
                     score: this.score,
                     currentTeam: this.currentTeam,
+                    currentPlayer: this.currentPlayer,
                     teamPlayers: this.teamPlayers,
                     all_words: this.allWords
                 })
