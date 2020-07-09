@@ -58,6 +58,7 @@ window.onload = function () {
             currentWord: '',
             showPass: true,
             score: { 'A': 0, 'B': 0},
+            finalScore: { 'A': 0, 'B': 0},
             round: 1,
             currentTeam: 'A',
             showScores: false,
@@ -81,9 +82,34 @@ window.onload = function () {
             return initialState();
         },
         mounted: function(){
-            this.refreshPage()
+            this.refreshPage();
+            this.polling = setInterval(function () {
+                this.loadData();
+              }.bind(this), 2000);
+        },
+        beforeDestroy: function() {
+            clearInterval(this.polling);
         },
         methods: {
+            loadData: function() {
+                if (this.gameId != null) {
+                    fetch(GAME_URL+'/'+this.gameId)
+                        .then(response => response.json())
+                        .then(result => {
+                            this.finalScore = result.score;
+                            this.round = result.round;
+                            this.teamPlayers = result.teamPlayers;
+                            this.currentTeam = result.currentTeam;
+                            if (result.round >= 4) {
+                                this.gameDescription = 'Game '+this.gameId+' in progress. Please wait for your turn';
+                                this.wordsLeft = result.words_left;
+                                this.currentWord = this.wordsLeft.pop();
+                                this.score = result.score;
+                                this.endTurn();
+                            }
+                        });
+                }
+            },
             startNew: function (event) {
                 this.isWelcomeHidden = true;
                 this.isStartGameHidden = false;
@@ -306,7 +332,14 @@ window.onload = function () {
             },
             correct: function(event) {
                 this.wordsGuessed.push(this.currentWord);
-                if (this.wordsLeft.length == 0) {
+                if (this.wordsLeft.length == 0 && this.wordsPassed.length != 0) {
+                    this.score[this.currentTeam]++;
+                    this.currentWord = null;
+                    this.showPass = true;
+                    this.endTurn();
+                    return;
+                }
+                else if (this.wordsLeft.length == 0) {
                     alert("End of round "+ this.round);
                     this.round++;
                     this.wordsLeft = Cookies.get('words').split(',');
@@ -358,6 +391,7 @@ window.onload = function () {
                     });
                 if (this.round >= 4) {
                     this.isGameEnded = true;
+                    clearInterval(this.polling);
                     if (this.score['A'] > this.score['B']) {
                         this.winner = 'A';
                     } else {
