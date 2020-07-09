@@ -96,6 +96,9 @@
                 <div v-if="isGameEnded" class="flex-row">
                     Team {{winner}} Wins!
                 </div>
+                <div v-if="isGameEnded" class="flex-row">
+                    <img class="ml-2 mt-2" src="https://media.giphy.com/media/g9582DNuQppxC/giphy.gif" />
+                </div>
                 <div v-if="!isGameEnded" class="col-md-12">
                     <h5>Next Turn: Team {{currentTeam}} Round {{round}}</h5>
                 </div>
