@@ -26,9 +26,9 @@
         <div v-if="!isLoading">
             <div class="welcomeDiv" v-if="!isWelcomeHidden">
                 <div class="row">
-                    <div class="col-md-1"></div>
-                    <div class="col-md-10"><h2 class="text-center">Welcome to whats in the bag!!!</h2></div>
-                    <div class="text-right"><a href="rules">Check Rules!</a></div>
+                    <div class="col-2"></div>
+                    <div class="col-8"><h2 class="text-center">Welcome to whats in the bag!!!</h2></div>
+                    <div class="col-2 text-right"><a href="rules">Check Rules!</a></div>
                 </div>
                 <div class="pt-4 text-center">
                     <button v-on:click="startNew" type="button" class="btn btn-primary">Start a new game</button>
@@ -112,5 +112,9 @@
     </div>
     </div>
 </body>
-
+<footer class="page-footer font-small mdb-color lighten-3 pt-4 fixed-bottom">
+<div class="footer-copyright text-center py-3">© 2020 Copyright: Created by 
+    <a target="_blank" href="https://www.linkedin.com/in/kartik-k-shetty/">Kartik Shetty</a>
+</div>
+</footer>
 </html>
