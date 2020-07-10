@@ -156,6 +156,10 @@ window.onload = function () {
                         this.gameId = data.id;
                         this.gameDescription = 'Game '+this.gameId+' in progress. Please let others know';
                         Cookies.set('game_id', this.gameId);
+                        this.showScores = true;
+                        this.showPass = true;
+                        this.showWords = false;
+                        this.showCreateTeams = false;
                         this.isLoading = false;
                     });
             },
