@@ -101,12 +101,13 @@ window.onload = function () {
                             this.currentTeam = result.currentTeam;
                             this.currentPlayer = result.currentPlayer;
                             this.allWords = result.all_words;
+                            this.wordsLeft = result.words_left;
                             if (result.round >= 4) {
                                 this.gameDescription = 'Game '+this.gameId+' in progress. Please wait for your turn';
-                                this.wordsLeft = result.words_left;
                                 this.currentWord = this.wordsLeft.pop();
                                 this.score = result.score;
                                 this.endTurn();
+                                clearInterval(this.polling);
                             }
                         });
                 }
@@ -415,7 +416,6 @@ window.onload = function () {
                 if (this.round >= 4) {
                     this.isGameEnded = true;
                     this.finalScore = this.score;
-                    clearInterval(this.polling);
                     if (this.score['A'] > this.score['B']) {
                         this.winner = 'A';
                     } else {
