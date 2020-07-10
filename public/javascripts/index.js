@@ -84,6 +84,9 @@ window.onload = function () {
             return initialState();
         },
         mounted: function(){
+            this.polling = setInterval(function () {
+                this.loadData();
+              }.bind(this), 2000);
             this.refreshPage();
         },
         beforeDestroy: function() {
@@ -115,16 +118,10 @@ window.onload = function () {
             startNew: function (event) {
                 this.isWelcomeHidden = true;
                 this.isStartGameHidden = false;
-                this.polling = setInterval(function () {
-                    this.loadData();
-                  }.bind(this), 2000);
             },
             joinGame: function(event) {
                 this.isWelcomeHidden = true;
                 this.isJoinGameHidden = false;
-                this.polling = setInterval(function () {
-                    this.loadData();
-                  }.bind(this), 2000);
             },
             submitTeams: function(event) {
                 this.teamPlayers = {'A': [], 'B': []};
