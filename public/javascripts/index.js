@@ -270,9 +270,6 @@ window.onload = function () {
                 this.refreshPage();
             },
             switchNextTurn: function(event) {
-                this.toggleTeam();
-                this.currentPlayer = this.teamPlayers[this.currentTeam].shift();
-                this.teamPlayers[this.currentTeam].push(this.currentPlayer);
                 this.isLoading = true;
                 fetch(GAME_URL+'/'+this.gameId)
                     .then(response => response.json())
@@ -280,6 +277,9 @@ window.onload = function () {
                         console.log(result);
                         this.wordsLeft = result.words_left;
                         this.score = result.score;
+                        this.toggleTeam();
+                        this.currentPlayer = this.teamPlayers[this.currentTeam].shift();
+                        this.teamPlayers[this.currentTeam].push(this.currentPlayer);
                         postRequestOptions.body = JSON.stringify({
                             words_left: this.wordsLeft,
                             words_guessed: [],
