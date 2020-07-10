@@ -334,13 +334,20 @@ window.onload = function () {
                         if (this.round >= 4) {
                             this.endTurn();
                         }
+                        else if (this.currentPlayer != Cookies.get("player_name")) {
+                            this.showScores = true;
+                            this.showPass = true;
+                            this.showWords = false;
+                            alert("Not your turn!");
+                        } else {
+                            this.isGameInProgress = false;
+                            this.showWords = true;
+                            this.showScores = false;
+                            this.showCreateTeams = false;
+                            this.timerHandle = startTimer(60, this.timeLeft, this.endTurn, this.changeColor);
+                        }
                         this.isLoading = false;
                     });
-                this.isGameInProgress = false;
-                this.showWords = true;
-                this.showScores = false;
-                this.showCreateTeams = false;
-                this.timerHandle = startTimer(60, this.timeLeft, this.endTurn, this.changeColor);
             },
             changeColor: function(event, value) {
                 this.isTimeEnding = value;
