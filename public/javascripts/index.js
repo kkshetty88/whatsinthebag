@@ -48,7 +48,7 @@ window.onload = function () {
             isStartGameHidden: true,
             isJoinGameHidden: true,
             isGameInProgress: false,
-            playerName: '',
+            playerName: null,
             gameId: null,
             gameDescription: '',
             showWords: false,
@@ -126,6 +126,7 @@ window.onload = function () {
                   }.bind(this), 2000);
             },
             submitTeams: function(event) {
+                this.teamPlayers = {'A': [], 'B': []};
                 Object.keys(this.selected).forEach(key => {
                     console.log(this.selected[key]);
                     if(this.selected[key] === 'B') {
@@ -201,6 +202,14 @@ window.onload = function () {
                     });
             },
             enterGameGuest: function(event) {
+                if (!this.playerName) {
+                    alert('Name is required');
+                    return;
+                }
+                if (!this.gameId) {
+                    alert('Game Id is required');
+                    return;
+                }
                 this.isLoading = true;
                 Cookies.set('player_name', this.playerName);
                 Cookies.set('game_id', this.gameId);

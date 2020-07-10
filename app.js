@@ -25,6 +25,10 @@ app.get('/', function(req, res) {
   res.sendFile(path.join(__dirname + '/html/index.html'));
 });
 
+app.get('/rules', function(req, res) {
+  res.sendFile(path.join(__dirname + '/html/rules.html'));
+});
+
 require('./routes/game')(app);
 
 // catch 404 and forward to error handler

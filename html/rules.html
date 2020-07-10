@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
+<!-- Load required Bootstrap and BootstrapVue CSS -->
+<link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap/dist/css/bootstrap.min.css" />
+<link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.css" />
+
+<!-- Load polyfills to support older browsers -->
+<script src="//polyfill.io/v3/polyfill.min.js?features=es2015%2CIntersectionObserver" crossorigin="anonymous"></script>
+
+<!-- Load Vue followed by BootstrapVue -->
+<script src="//unpkg.com/vue@latest/dist/vue.min.js"></script>
+<script src="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.js"></script>
+
+<!-- Load the following for BootstrapVueIcons support -->
+<script src="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue-icons.min.js"></script>
+</head>
+<body class="ml-2">
+    <h3>
+        Host a Game
+    </h3>
+    <p>
+        &bull; You can host a new game by clicking the "Start a new game" button.<br>
+        &bull; Enter your name and wait for the new game id to be created.<br>
+        &bull; Share the game id with your friends and wait for them to join.<br>
+        &bull; Click "Create Teams" to assign teams to each player. Click "Submit Teams" once assigned.<br>
+        &bull; You can start the game by pressing "Begin". The host of the game will be the first one to start.
+    </p>
+    <h3>
+        Join a Game
+    </h3>
+    <p>
+        &bull; You can enter a game by clicking the "Join a game" button.<br>
+        &bull; Enter your name and the game Id shared by the host.<br>
+        &bull; Wait for the host to create the teams.<br>
+        &bull; When it is your turn, press the "Resume" button to begin your turn.
+    </p>
+    <h3>
+        Basic Game Rules
+    </h3>
+    <p>
+        &bull; This game consists of two teams, mainly Team A and Team B.<br>
+        &bull; We begin the game with 40 random words and use these words for 3 rounds.<br>
+        &bull; The main idea behind the game is for your team members to guess more words than the other team.<br>
+    </p>
+    <h3>
+        Round 1
+    </h3>
+        &bull; The game begins with Round 1 where the host (from Team A) sees the first word and tries to describe the word to his team using a sentence/synonym/antonym etc.<br>
+        For eg. Lets say the word is "snowflake", you could say "Frozen ice that falls from the sky". You cannot say the word snow in your clue.<br>
+        &bull; If your team member guesses it correctly you mark the "Correct" button. If not, you could either "Pass" or keep giving more clues.<br>
+        &bull; If its guessed correctly your team earns 1 point and you move on to the next word and so on. You will get 1 minute to describe as many words as possible.<br>
+        &bull; Once the time's up, the player from Team B, continues the game by hitting the "Resume" button on his/her screen. <br>
+        &bull; This is continued till all the 40 words are over. Once complete we move to Round 2.
+    </p>
+    <h3>
+        Round 2
+    </h3>
+    <p>
+        &bull; We use the same set of 40 words but use a one word clue. The next player in line gets to start this round. <br>
+        For eg. Lets say the word is "snowflake" again, you could say "Ice". If all the players had noted snowflake from the previous round, they can guess it correctly.<br>
+        &bull; If your team member guesses it correctly you mark the "Correct" button. If not, you could "Pass" or wait till the time's up<br>
+        &bull; If its guessed correctly your team earns 1 point and you move on to the next word and so on. You will get 1 minute to give one word clues to as many words as possible.<br>
+        &bull; Once the time's up, the next player in line continues the game by hitting the "Resume" button on his/her screen. <br>
+        &bull; This is continued till all the 40 words are over. Once complete we move to Round 3.
+    </p>
+    <h3>
+        Round 3
+    </h3>
+    <p>
+        &bull; We use the same set of 40 words but use dumb charades. <br>
+        &bull; If your team member guesses it correctly you mark the "Correct" button. If not, you could "Pass" or wait till the time's up<br>
+        &bull; If its guessed correctly your team earns 1 point and you move on to the next word and so on. You will get 1 minute to give one word clues to as many words as possible.<br>
+        &bull; Once the time's up, the next player in line continues the game by hitting the "Resume" button on his/her screen. <br>
+        &bull; This is continued till all the 40 words are over. Once complete, the Winner is declared.
+    </p>
+    <h3>
+        Pass
+    </h3>
+    <p>
+        &bull; Each player gets one word he can pass/skip in every turn.<br>
+        &bull; The passed word is reshuffled back in the deck.
+    </p>
+<div><a href="/" class="btn btn-primary">Go Back</a></div>
+</body>
+</html>

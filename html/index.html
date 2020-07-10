@@ -25,7 +25,11 @@
         <div v-if="isLoading && timesUp" class="timesup-loader"></div>
         <div v-if="!isLoading">
             <div class="welcomeDiv" v-if="!isWelcomeHidden">
-                <div><h2 class="text-center">Welcome to whats in the bag!!!</h2></div>
+                <div class="row">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-10"><h2 class="text-center">Welcome to whats in the bag!!!</h2></div>
+                    <div class="text-right"><a href="rules">Check Rules!</a></div>
+                </div>
                 <div class="pt-4 text-center">
                     <button v-on:click="startNew" type="button" class="btn btn-primary">Start a new game</button>
                     <button v-on:click="joinGame" type="button" class="btn btn-primary ml-2">Join a game</button>
@@ -40,11 +44,11 @@
             </div>
             <div class="flex enterGameDiv" v-if="!isJoinGameHidden">
                 <div class="flex-row pt-4">
-                <span class="col-md-2 mt-1 text-nowrap">PlayerName</span> 
+                <span class="col-md-2 mt-1 text-nowrap">Player Name</span> 
                 <input v-model="playerName" type="text" class="form-control col-md-3">
                 <span class="mx-2 mt-1 text-nowrap">Game Id</span> 
                 <input v-model="gameId" type="text" class="form-control col-md-3">
-                <button v-on:click="enterGameGuest" type="button" class="col-md-2 ml-3">Enter</button>
+                <button v-on:click="enterGameGuest" type="button" class="col-md-2 ml-3 btn btn-primary">Enter</button>
                 </div>
             </div>
             <div v-if="isGameInProgress && isAdmin">
