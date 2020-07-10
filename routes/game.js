@@ -1,7 +1,7 @@
 var MongoClient = require('mongodb').MongoClient;
 var url = 'mongodb://kshetty:wvwCuUFBOuyguqxGckfbFzl0pYr5KF1PCwfEABefzGFzTaUNUPEpkK7udGPFJ7I2n8NMuHW7i3wNMJzZDKOHMA==@kshetty.mongo.cosmos.azure.com:10255/?ssl=true&appName=@kshetty@';
 var findWords = function(db, resultWords, callback) {
-    var randomNum = Math.floor(Math.random() * 6);
+    var randomNum = Math.floor(Math.random() * 10);
     var type = String.fromCharCode(65+randomNum);
     var cursor =db.collection('words').find({"type": type});
     cursor.each(function(err, doc) {
