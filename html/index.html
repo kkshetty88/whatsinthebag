@@ -21,10 +21,31 @@
 <body>
     <div id="app">
         <div v-cloak>
+        <div>
+            <b-modal hide-footer id="playerNameModal" title="Warning!" header-class="alert alert-warning">
+                <p>Player Name is required</p>
+            </b-modal>
+        </div>
+        <div>
+            <b-modal hide-footer id="gameIdModal" title="Warning!" header-class="alert alert-warning">
+                <p>Game Id is required</p>
+            </b-modal>
+        </div>
+        <div>
+            <b-modal hide-footer id="notYourTurnModal" title="Warning!" header-class="alert alert-warning">
+                <p>Not your turn! Please wait for your turn</p>
+            </b-modal>
+        </div>
+        <div>
+            <b-modal hide-footer id="endRoundModal" title="Round Complete"  header-class="alert alert-success">
+                <p>End of round {{prevround}}</p>
+            </b-modal>
+        </div>
         <div v-if="isLoading && !timesUp" class="loader"></div>
         <div v-if="isLoading && timesUp" class="timesup-loader"></div>
         <div v-if="!isLoading">
             <div class="welcomeDiv" v-if="!isWelcomeHidden">
+                
                 <div class="row">
                     <div class="col-2"></div>
                     <div class="col-8"><h2 class="text-center">Welcome to whats in the bag!!!</h2></div>
@@ -37,14 +58,14 @@
             </div>
             <div class="flex enterGameDiv" v-if="!isStartGameHidden">
                 <div class="flex-row pt-4">
-                <span class="col-md-3 mt-1 text-nowrap">Player Name</span> 
-                <input v-model="playerName" type="text" class="form-control ml-3">
+                <span class="mx-2 mt-1 text-nowrap">Player Name</span> 
+                <input v-model="playerName" type="text" class="form-control">
                 <button v-on:click="enterGame" type="button" class="btn btn-primary ml-3">Enter</button>
                 </div>
             </div>
             <div class="flex enterGameDiv" v-if="!isJoinGameHidden">
                 <div class="flex-row pt-4">
-                <span class="col-md-2 mt-1 text-nowrap">Player Name</span> 
+                <span class="mx-2 mt-1 text-nowrap">Player Name</span> 
                 <input v-model="playerName" type="text" class="form-control col-md-3">
                 <span class="mx-2 mt-1 text-nowrap">Game Id</span> 
                 <input v-model="gameId" type="text" class="form-control col-md-3">

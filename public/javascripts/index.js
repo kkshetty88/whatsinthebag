@@ -59,6 +59,7 @@ window.onload = function () {
             showPass: true,
             score: { 'A': 0, 'B': 0},
             finalScore: { 'A': 0, 'B': 0},
+            prevround: 1,
             round: 1,
             currentTeam: 'A',
             currentPlayer: '',
@@ -133,8 +134,6 @@ window.onload = function () {
                         this.teamPlayers['A'].push(key);
                     }
                 });
-                console.log("SHETTY");
-                console.log(this.teamPlayers);
                 this.isLoading = true;
                 this.currentPlayer = this.teamPlayers[this.currentTeam].shift();
                 this.teamPlayers[this.currentTeam].push(this.currentPlayer);
@@ -162,7 +161,7 @@ window.onload = function () {
             },
             enterGame: function(event) {
                 if (!this.playerName) {
-                    alert('Name is required');
+                    this.$bvModal.show('playerNameModal');
                     return;
                 }
                 this.isLoading = true;
@@ -201,11 +200,11 @@ window.onload = function () {
             },
             enterGameGuest: function(event) {
                 if (!this.playerName) {
-                    alert('Name is required');
+                    this.$bvModal.show('playerNameModal');
                     return;
                 }
                 if (!this.gameId) {
-                    alert('Game Id is required');
+                    this.$bvModal.show('gameIdModal');
                     return;
                 }
                 this.isLoading = true;
@@ -338,7 +337,7 @@ window.onload = function () {
                             this.showScores = true;
                             this.showPass = true;
                             this.showWords = false;
-                            alert("Not your turn!");
+                            this.$bvModal.show('notYourTurnModal');
                         } else {
                             this.isGameInProgress = false;
                             this.showWords = true;
@@ -371,7 +370,8 @@ window.onload = function () {
                     return;
                 }
                 else if (this.wordsLeft.length == 0) {
-                    alert("End of round "+ this.round);
+                    this.prevround = this.round;
+                    this.$bvModal.show('endRoundModal');
                     this.round++;
                     this.wordsLeft = this.allWords;
                     this.currentWord = null;
@@ -396,6 +396,7 @@ window.onload = function () {
                 console.log(this.wordsPassed);
                 this.wordsLeft = this.wordsLeft.concat(this.wordsPassed);
                 this.wordsPassed = [];
+                this.timeLeft = {message: ''};
                 if (this.currentWord != null) {
                     this.wordsLeft.push(this.currentWord);
                 }
