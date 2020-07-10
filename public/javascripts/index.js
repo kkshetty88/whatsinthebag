@@ -101,9 +101,9 @@ window.onload = function () {
                             this.currentTeam = result.currentTeam;
                             this.currentPlayer = result.currentPlayer;
                             this.allWords = result.all_words;
-                            this.wordsLeft = result.words_left;
                             if (result.round >= 4) {
                                 this.gameDescription = 'Game '+this.gameId+' in progress. Please wait for your turn';
+                                this.wordsLeft = result.words_left;
                                 this.currentWord = this.wordsLeft.pop();
                                 this.score = result.score;
                                 this.endTurn();
@@ -277,26 +277,33 @@ window.onload = function () {
                 this.currentPlayer = this.teamPlayers[this.currentTeam].shift();
                 this.teamPlayers[this.currentTeam].push(this.currentPlayer);
                 this.isLoading = true;
-                postRequestOptions.body = JSON.stringify({
-                    words_left: this.wordsLeft,
-                    words_guessed: [],
-                    words_passed: [],
-                    round: this.round,
-                    id: this.gameId,
-                    score: this.score,
-                    currentTeam: this.currentTeam,
-                    currentPlayer: this.currentPlayer,
-                    teamPlayers: this.teamPlayers,
-                    all_words: this.allWords
-                })
-                fetch(GAME_URL, postRequestOptions)
+                fetch(GAME_URL+'/'+this.gameId)
                     .then(response => response.json())
-                    .then(data => {
-                        this.gameId = data.id;
-                        this.gameDescription = 'Game '+this.gameId+' in progress. Please wait for your turn';
-                        this.isLoading = false;
-                        this.timesUp = false;
-                    });
+                    .then(result => {
+                        console.log(result);
+                        this.wordsLeft = result.words_left;
+                        this.score = result.score;
+                        postRequestOptions.body = JSON.stringify({
+                            words_left: this.wordsLeft,
+                            words_guessed: [],
+                            words_passed: [],
+                            round: this.round,
+                            id: this.gameId,
+                            score: this.score,
+                            currentTeam: this.currentTeam,
+                            currentPlayer: this.currentPlayer,
+                            teamPlayers: this.teamPlayers,
+                            all_words: this.allWords
+                        })
+                        fetch(GAME_URL, postRequestOptions)
+                            .then(response => response.json())
+                            .then(data => {
+                                this.gameId = data.id;
+                                this.gameDescription = 'Game '+this.gameId+' in progress. Please wait for your turn';
+                                this.isLoading = false;
+                                this.timesUp = false;
+                            });
+                        });
             },
             createTeams: function(event) {
                 this.isLoading = true;
