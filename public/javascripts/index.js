@@ -127,7 +127,7 @@ window.onload = function () {
             submitTeams: function(event) {
                 this.teamPlayers = {'A': [], 'B': []};
                 Object.keys(this.selected).forEach(key => {
-                    console.log(this.selected[key]);
+                    //console.log(this.selected[key]);
                     if(this.selected[key] === 'B') {
                         this.teamPlayers['B'].push(key);
                     } else {
@@ -180,7 +180,7 @@ window.onload = function () {
                         this.wordsLeft = result;
                         this.allWords = result;
                         Cookies.set('words', result);
-                        console.log(this.wordsLeft);
+                        //console.log(this.wordsLeft);
                         postRequestOptions.body = JSON.stringify({
                             words_left: result,
                             words_guessed: [],
@@ -221,7 +221,7 @@ window.onload = function () {
                 fetch(GAME_URL+'/'+this.gameId)
                     .then(response => response.json())
                     .then(result => {
-                        console.log(result);
+                        //console.log(result);
                         this.gameDescription = 'Game '+this.gameId+' in progress. Please wait for your turn';
                         this.wordsLeft = result.words_left;
                         this.score = result.score;
@@ -277,7 +277,7 @@ window.onload = function () {
                 fetch(GAME_URL+'/'+this.gameId)
                     .then(response => response.json())
                     .then(result => {
-                        console.log(result);
+                        //console.log(result);
                         this.wordsLeft = result.words_left;
                         this.score = result.score;
                         this.toggleTeam();
@@ -312,18 +312,18 @@ window.onload = function () {
                 fetch(GAME_URL+'/'+this.gameId)
                     .then(response => response.json())
                     .then(result => {
-                        console.log(result);
+                        //console.log(result);
                         this.players = result.players;
                         this.isLoading = false;
                     });
             },
             beginGame: function(event) {
-                console.log(this.selected[this.playerName]);
+                //console.log(this.selected[this.playerName]);
                 this.isLoading = true;
                 fetch(GAME_URL+'/'+this.gameId)
                     .then(response => response.json())
                     .then(result => {
-                        console.log(result);
+                        //console.log(result);
                         this.gameDescription = 'Game '+this.gameId+' in progress. Please wait for your turn';
                         this.wordsLeft = result.words_left;
                         this.currentWord = this.wordsLeft.pop();
@@ -333,7 +333,7 @@ window.onload = function () {
                         this.round = result.round;
                         this.teamPlayers = result.teamPlayers;
                         this.allWords = result.all_words;
-                        console.log(this.teamPlayers);
+                        //console.log(this.teamPlayers);
                         if (this.round >= 4) {
                             this.endTurn();
                         }
@@ -388,7 +388,7 @@ window.onload = function () {
                 this.score[this.currentTeam]++;
             },
             endTurn: function(event, timesUp = false) {
-                console.log(timesUp);
+                //console.log(timesUp);
                 this.isLoading = true;
                 this.timesUp = timesUp;
                 this.toggleTeam();
@@ -396,8 +396,8 @@ window.onload = function () {
                 this.showScores = true;
                 this.showPass = true;
                 this.showWords = false;
-                console.log(this.wordsLeft);
-                console.log(this.wordsPassed);
+                //console.log(this.wordsLeft);
+                //console.log(this.wordsPassed);
                 this.wordsLeft = this.wordsLeft.concat(this.wordsPassed);
                 this.wordsPassed = [];
                 this.timeLeft = {message: ''};
