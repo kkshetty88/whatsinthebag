@@ -154,13 +154,17 @@ window.onload = function () {
                     .then(response => response.json())
                     .then(data => {
                         this.gameId = data.id;
-                        this.gameDescription = 'Game '+this.gameId+' in progress. Please let others know';
+                        this.gameDescription = 'Game '+this.gameId+' in progress. Please let others know. Create Teams after all players have joined.';
                         Cookies.set('game_id', this.gameId);
                         this.showScores = true;
                         this.showPass = true;
                         this.showWords = false;
                         this.showCreateTeams = false;
                         this.isLoading = false;
+                        clearInterval(this.polling);
+                        this.polling = setInterval(function () {
+                            this.loadData();
+                          }.bind(this), 2000);
                     });
             },
             enterGame: function(event) {
@@ -196,7 +200,7 @@ window.onload = function () {
                             .then(response => response.json())
                             .then(data => {
                                 this.gameId = data.id;
-                                this.gameDescription = 'Game '+this.gameId+' in progress. Please let others know';
+                                this.gameDescription = 'Game '+this.gameId+' in progress. Please let others know. Create Teams after all players have joined';
                                 Cookies.set('game_id', this.gameId);
                                 this.isLoading = false;
                             });
@@ -245,6 +249,10 @@ window.onload = function () {
                             .then(response => response.json())
                             .then(data => {
                                 this.isLoading = false;
+                                clearInterval(this.polling);
+                                this.polling = setInterval(function () {
+                                    this.loadData();
+                                  }.bind(this), 2000);
                             });
                     });
             },
@@ -316,6 +324,49 @@ window.onload = function () {
                         this.players = result.players;
                         this.isLoading = false;
                     });
+            },
+            getPlayers: function(event) {
+                this.isLoading = true;
+                this.isGameInProgress = false;
+                this.showCreateTeams = true;
+                fetch(GAME_URL+'/'+this.gameId)
+                    .then(response => response.json())
+                    .then(result => {
+                        //console.log(result);
+                        this.players = result.players;
+                        this.isLoading = false;
+                    });
+            },
+            removeCurrentPlayer: function(event) {
+                this.isLoading = true;
+                fetch(GAME_URL+'/'+this.gameId)
+                    .then(response => response.json())
+                    .then(result => {
+                        //console.log(result);
+                        this.wordsLeft = result.words_left;
+                        this.score = result.score;
+                        this.currentPlayer = this.teamPlayers[this.currentTeam].shift();
+                        postRequestOptions.body = JSON.stringify({
+                            words_left: this.wordsLeft,
+                            words_guessed: [],
+                            words_passed: [],
+                            round: this.round,
+                            id: this.gameId,
+                            score: this.score,
+                            currentTeam: this.currentTeam,
+                            currentPlayer: this.currentPlayer,
+                            teamPlayers: this.teamPlayers,
+                            all_words: this.allWords
+                        })
+                        fetch(GAME_URL, postRequestOptions)
+                            .then(response => response.json())
+                            .then(data => {
+                                this.gameId = data.id;
+                                this.gameDescription = 'Game '+this.gameId+' in progress. Please wait for your turn';
+                                this.isLoading = false;
+                                this.timesUp = false;
+                            });
+                        });
             },
             beginGame: function(event) {
                 //console.log(this.selected[this.playerName]);
@@ -433,9 +484,11 @@ window.onload = function () {
                     this.isGameEnded = true;
                     this.finalScore = this.score;
                     if (this.score['A'] > this.score['B']) {
-                        this.winner = 'A';
+                        this.winner = 'Team A wins';
+                    } else if(this.score['A'] < this.score['B']) {
+                        this.winner = 'Team B wins';
                     } else {
-                        this.winner = 'B';
+                        this.winner = 'Teams A and B are tied';
                     }
                 }
             },

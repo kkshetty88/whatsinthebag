@@ -94,6 +94,10 @@
     animation-delay: -0.5s;
   }
 
+  .reload {
+    font-family: Lucida Sans Unicode
+  }
+
 /* Safari */
 @-webkit-keyframes spin {
   0% { -webkit-transform: rotate(0deg); }

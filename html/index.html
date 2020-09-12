@@ -90,7 +90,7 @@
                         </li>
                     </ul>
                 </div>
-                <div class="flex-row"><button v-on:click="submitTeams" type="button" class="btn btn-primary mx-2">Submit Teams</button><button v-on:click="clearCookies" type="button" class="btn btn-primary mx-2">Exit</button></div>
+                <div class="flex-row"><button type="button" class="btn btn-primary mx-2" v-on:click="getPlayers">Refresh Player List</button><button v-on:click="submitTeams" type="button" class="btn btn-primary mx-2">Submit Teams</button><button v-on:click="clearCookies" type="button" class="btn btn-primary mx-2">Exit</button></div>
             </div>
             <div class="flex flex-column" v-if="showWords">
                 <div class="flex-row full-width">
@@ -119,7 +119,7 @@
                     <div class="col-md-6">{{finalScore['B']}}</div>
                 </div>
                 <div v-if="isGameEnded" class="flex-row">
-                    Team {{winner}} Wins!
+                   {{winner}}
                 </div>
                 <div v-if="isGameEnded" class="flex-row">
                     <img class="ml-2 mt-2" src="https://media.giphy.com/media/g9582DNuQppxC/giphy.gif" />
@@ -127,7 +127,7 @@
                 <div v-if="!isGameEnded" class="col-md-12">
                     <h5>Next Turn: Team {{currentTeam}} {{currentPlayer}} Round {{round}}</h5>
                 </div>
-                <div class="flex-row pt2"><button v-if="!isGameEnded" v-on:click="beginGame" type="button" class="btn btn-primary mx-2">Resume!</button><button v-if="!isGameEnded" v-on:click="switchNextTurn" type="button" class="btn btn-primary mx-2">Switch Next Turn!</button><button v-on:click="clearCookies" type="button" class="btn btn-primary mx-2">Exit</button></div>
+                <div class="flex-row pt2"><button v-if="!isGameEnded" v-on:click="beginGame" type="button" class="btn btn-primary mx-2">Resume!</button><button v-if="!isGameEnded" v-on:click="switchNextTurn" type="button" class="btn btn-primary mx-2">Switch Next Turn!</button><button v-if="!isGameEnded" v-on:click="removeCurrentPlayer" type="button" class="btn btn-primary mx-2">Remove Player {{currentPlayer}}</button><button v-on:click="clearCookies" type="button" class="btn btn-primary mx-2">Exit</button></div>
             </div>
         </div>
     </div>
