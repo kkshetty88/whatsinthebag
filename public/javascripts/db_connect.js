@@ -42,15 +42,15 @@ async function processLineByLine() {
 
 processLineByLine();
 
-var insertDocument = function(db, callback) {
+var insertDocument = function(db, numWords, callback) {
     words = shuffleArray(words);
     var wordSet = new Set(words);
     words = Array.from(wordSet);
     var k = 0;
     for(i = 0; i < words.length; i++) {
         var type = String.fromCharCode(65+k);
-        for(j = 0; j < 40; j++) {
-            db.collection('words').insertOne( {
+        for(j = 0; j < numWords; j++) {
+            db.collection('words'+numWords).insertOne( {
                     "id": i,
                     "word": words[i],
                     "type": type
@@ -105,7 +105,13 @@ cursor.each(function(err, doc) {
 MongoClient.connect(url, function(err, client) {
 assert.equal(null, err);
 var db = client.db('wordsDB');
-insertDocument(db, function() {
+insertDocument(db, 40, function() {
+    client.close();
+});
+insertDocument(db, 50, function() {
+    client.close();
+});
+insertDocument(db, 60, function() {
     client.close();
 });
 });

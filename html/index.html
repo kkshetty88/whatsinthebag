@@ -60,6 +60,13 @@
                 <div class="flex-row pt-4">
                 <span class="mx-2 mt-1 text-nowrap">Player Name</span> 
                 <input v-model="playerName" type="text" class="form-control">
+                <span class="mx-2 mt-1 text-nowrap">Number of Words</span>
+                <select class="ml-2" v-model="numWords">
+                    <option disabled value="">Please select one</option>
+                    <option>40</option>
+                    <option>50</option>
+                    <option>60</option>
+                </select>
                 <button v-on:click="enterGame" type="button" class="btn btn-primary ml-3">Enter</button>
                 </div>
             </div>

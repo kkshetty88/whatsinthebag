@@ -76,7 +76,8 @@ window.onload = function () {
             selected: {},
             timesUp: false,
             isTimeEnding: false,
-            allWords: []
+            allWords: [],
+            numWords: 40
         }
     };
     var app = new Vue({
@@ -178,7 +179,7 @@ window.onload = function () {
                 this.isStartGameHidden = true;
                 this.isGameInProgress = true;
                 this.isAdmin = true;
-                fetch(WORD_URL)
+                fetch(WORD_URL+ "/" + this.numWords)
                     .then(response => response.json())
                     .then(result => {
                         this.wordsLeft = result;
