@@ -106,19 +106,21 @@
             </div>
             <div class="flex flex-column" v-if="showWords">
                 <div class="flex-row full-width">
-                    <div class="card card-header ml-2 mt-2 text-center xx-large flex-grow-1 col-md-4">
+                    <div class="col-md-4"></div>
+                    <div class="card card-header mt-2 text-center xx-large flex-grow-1 col-md-4">
                         <span class="align-middle card-body">{{currentWord}}</span>
                     </div>
-                    <div class="pl2 flex-grow-4">
-                        <div class="flex-row col-md-4 my-2"><button v-on:click="correct" type="button" class="btn btn-primary w-100">Correct</button></div>
-                        <div v-if="showPass" class="flex-row col-md-4 my-2"><button v-on:click="pass" type="button" class="btn btn-primary w-100">Pass</button></div>
-                        <div class="flex-row col-md-4 my-2"><button v-on:click="endTurn" type="button" class="btn btn-primary w-100">End Turn</button></div>
-                    </div>
+                    <div class="col-md-2"></div>
                     <div class="pl2 flex-grow-1">
                         <div class="flex-row">Round {{round}}</div>
                         <div class="flex-row">Team {{currentTeam}} Score: {{score[currentTeam]}}</div>
                         <div class="flex-row" v-bind:class="{ 'text-danger': isTimeEnding}">{{timeLeft.message}}</div>
                     </div>
+                </div>
+                <div class="flex-row mt-2 pt2 align-self-center">
+                    <button v-on:click="correct" type="button" class="btn btn-primary width100 mx-3">Correct</button>
+                    <button v-if="showPass" v-on:click="pass" type="button" class="btn btn-primary width100 mx-3">Pass</button>
+                    <button v-on:click="endTurn" type="button" class="btn btn-primary width100 mx-3">End Turn</button>
                 </div>
             </div>
             <div v-if="showScores || (isGameInProgress && !isAdmin)" class="flex-column xx-large ml-2">
@@ -139,7 +141,7 @@
                 <div v-if="!isGameEnded" class="col-md-12 text-center">
                     <h5>Next Turn: Team {{currentTeam}} Player {{currentPlayer}} Round {{round}}</h5>
                 </div>
-                <div class="flex-row pt2 align-self-lg-center"><button v-if="!isGameEnded" v-on:click="beginGame" type="button" class="btn btn-primary mx-2">Resume!</button><button v-if="!isGameEnded" v-on:click="switchNextTurn" type="button" class="btn btn-primary mx-2">Switch Next Turn!</button><button v-if="!isGameEnded" v-on:click="removeCurrentPlayer" type="button" class="btn btn-primary mx-2">Remove Player {{currentPlayer}}</button><button v-on:click="clearCookies" type="button" class="btn btn-primary mx-2">Exit</button></div>
+                <div class="flex-row pt2 align-self-center"><button v-if="!isGameEnded" v-on:click="beginGame" type="button" class="btn btn-primary mx-2">Resume!</button><button v-if="!isGameEnded" v-on:click="switchNextTurn" type="button" class="btn btn-primary mx-2">Switch Next Turn!</button><button v-if="!isGameEnded" v-on:click="removeCurrentPlayer" type="button" class="btn btn-primary mx-2">Remove Player {{currentPlayer}}</button><button v-on:click="clearCookies" type="button" class="btn btn-primary mx-2">Exit</button></div>
             </div>
         </div>
     </div>
