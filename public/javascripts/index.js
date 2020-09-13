@@ -378,6 +378,8 @@ window.onload = function () {
                         //console.log(result);
                         this.gameDescription = 'Game '+this.gameId+' in progress. Please wait for your turn';
                         this.wordsLeft = result.words_left;
+                        var wordSet = new Set(this.wordsLeft);
+                        this.wordsLeft = Array.from(wordSet);
                         this.currentWord = this.wordsLeft.pop();
                         this.score = result.score;
                         this.currentTeam = result.currentTeam;
