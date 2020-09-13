@@ -6,7 +6,7 @@ var findWords = function(db, numWords, resultWords, callback) {
     var cursor =db.collection('words'+numWords).find({"type": type});
     cursor.each(function(err, doc) {
         if (doc != null) {
-            console.dir(doc);
+            //console.dir(doc);
             resultWords.push(doc.word);
         } else {
             callback();
@@ -14,22 +14,35 @@ var findWords = function(db, numWords, resultWords, callback) {
     });
 };
 
+var fs = require('fs');
+var accessCode = '';
+fs.readFile('accessCode.txt', 'utf8', function(err, data) {
+    if (err) throw err;
+    accessCode = data;
+});
+
 module.exports = function(app) {  //receiving "app" instance
     app.get('/listWords/:numWords', function (req, res) {
-        const numWords = Number(req.params.numWords);
-        MongoClient.connect(url, function(err, client) {
-            var db = client.db('wordsDB');
-            var resultWords = [];
-            findWords(db, numWords, resultWords, function() {
-                console.log(resultWords);
-                res.send(resultWords);
-                client.close();
+        var query = require('url').parse(req.url, true).query;
+        if (query.accesscode !== accessCode) {
+            res.send([]);
+            return;
+        } else {
+            const numWords = Number(req.params.numWords);
+            MongoClient.connect(url, function(err, client) {
+                var db = client.db('wordsDB');
+                var resultWords = [];
+                findWords(db, numWords, resultWords, function() {
+                    console.log(resultWords);
+                    res.send(resultWords);
+                    client.close();
+                });
             });
-        });
+        }
     })
 
     app.get('/games/:id', function (req, res) {
-        console.log("Here");
+        //console.log("Here");
         const gameId = Number(req.params.id);
         MongoClient.connect(url, function(err, client) {
             var db = client.db('gamesDB');
@@ -45,7 +58,7 @@ module.exports = function(app) {  //receiving "app" instance
 
     app.post('/games', function (req, res) {
         const body = req.body;
-        console.log(body);
+        //console.log(body);
         MongoClient.connect(url, function(err, client) {
             if('id' in body) {
                 var gameId = Number(body.id);
@@ -71,8 +84,8 @@ module.exports = function(app) {  //receiving "app" instance
                     upsert: true
                 },
                 function(err, result) {
-                    console.log(result);
-                    console.log(err);
+                    //console.log(result);
+                    //console.log(err);
                     console.log("Inserted a document into the games collection.");
                     client.close();
                     res.send({id: gameId});

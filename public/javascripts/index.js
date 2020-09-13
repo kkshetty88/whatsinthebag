@@ -77,7 +77,8 @@ window.onload = function () {
             timesUp: false,
             isTimeEnding: false,
             allWords: [],
-            numWords: 40
+            numWords: 40,
+            accessCode: ''
         }
     };
     var app = new Vue({
@@ -179,9 +180,17 @@ window.onload = function () {
                 this.isStartGameHidden = true;
                 this.isGameInProgress = true;
                 this.isAdmin = true;
-                fetch(WORD_URL+ "/" + this.numWords)
+                fetch(WORD_URL+ "/" + this.numWords + "?accesscode=" + this.accessCode)
                     .then(response => response.json())
                     .then(result => {
+                        if (result.length === 0) {
+                            alert("Incorrect Access Code. Please try again.");
+                            Cookies.remove('player_name');
+                            this.isLoading = false;
+                            this.isStartGameHidden = false;
+                            this.isGameInProgress = false;
+                            return;
+                        }
                         this.wordsLeft = result;
                         this.allWords = result;
                         Cookies.set('words', result);
