@@ -48,8 +48,13 @@
                 
                 <div class="row">
                     <div class="col-2"></div>
-                    <div class="col-8"><h2 class="text-center">Welcome to whats in the bag!!!</h2></div>
+                    <div class="col-8">
+                        <!-- <h2 class="text-center">Welcome to whats in the bag!!!</h2> -->
+                    </div>
                     <div class="col-2 text-right"><a href="rules">Check Rules!</a></div>
+                </div>
+                <div>
+                    <img class="mt-2 centerImg" style="width:40%;height:40%;" src="../images/whatsinthebaglogo.gif" />
                 </div>
                 <div class="pt-4 text-center">
                     <button v-on:click="startNew" type="button" class="btn btn-primary">Start a new game</button>
@@ -129,7 +134,7 @@
                    {{winner}}
                 </div>
                 <div v-if="isGameEnded" class="flex-row">
-                    <img class="ml-2 mt-2" src="https://media.giphy.com/media/g9582DNuQppxC/giphy.gif" />
+                    <img class="centerImg mt-2" src="https://media.giphy.com/media/g9582DNuQppxC/giphy.gif" />
                 </div>
                 <div v-if="!isGameEnded" class="col-md-12">
                     <h5>Next Turn: Team {{currentTeam}} {{currentPlayer}} Round {{round}}</h5>
