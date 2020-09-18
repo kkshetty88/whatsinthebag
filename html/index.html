@@ -143,7 +143,7 @@
                 <div v-if="!isGameEnded" class="col-md-12 text-center">
                     <h5>Next Turn: Team {{currentTeam}} Player {{currentPlayer}} Round {{round}}</h5>
                 </div>
-                <div class="flex-row pt2 align-self-center"><button v-if="!isGameEnded" v-on:click="beginGame" type="button" class="btn btn-primary mx-2">Resume!</button><button v-if="!isGameEnded" v-on:click="switchNextTurn" type="button" class="btn btn-primary mx-2">Switch Next Turn!</button><button v-if="!isGameEnded" v-on:click="removeCurrentPlayer" type="button" class="btn btn-primary mx-2">Remove Player {{currentPlayer}}</button><button v-on:click="clearCookies" type="button" class="btn btn-primary mx-2">Exit</button></div>
+                <div class="flex-row pt2 align-self-center"><button v-if="!isGameEnded" v-on:click="beginGame" type="button" class="btn btn-primary mx-2">Resume!</button><button v-if="!isGameEnded && isAdmin" v-on:click="switchNextTurn" type="button" class="btn btn-primary mx-2">Switch Next Turn!</button><button v-if="!isGameEnded && isAdmin" v-on:click="removeCurrentPlayer" type="button" class="btn btn-primary mx-2">Remove Player {{currentPlayer}}</button><button v-on:click="clearCookies" type="button" class="btn btn-primary mx-2">Exit</button></div>
             </div>
         </div>
     </div>

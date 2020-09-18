@@ -180,12 +180,14 @@ window.onload = function () {
                 this.isStartGameHidden = true;
                 this.isGameInProgress = true;
                 this.isAdmin = true;
+                Cookies.set('isAdmin', this.isAdmin);
                 fetch(WORD_URL+ "/" + this.numWords + "?accesscode=" + this.accessCode)
                     .then(response => response.json())
                     .then(result => {
                         if (result.length === 0) {
                             alert("Incorrect Access Code. Please try again.");
                             Cookies.remove('player_name');
+                            Cookies.remove('isAdmin');
                             this.isLoading = false;
                             this.isStartGameHidden = false;
                             this.isGameInProgress = false;
@@ -228,6 +230,7 @@ window.onload = function () {
                 this.isLoading = true;
                 Cookies.set('player_name', this.playerName);
                 Cookies.set('game_id', this.gameId);
+                Cookies.set('isAdmin', false);
                 this.isWelcomeHidden = true;
                 this.isStartGameHidden = true;
                 this.isGameInProgress = true;
@@ -286,6 +289,7 @@ window.onload = function () {
                 Cookies.remove('player_name');
                 Cookies.remove('game_id');
                 Cookies.remove('words');
+                Cookies.remove('isAdmin');
                 clearInterval(this.polling);
                 Object.assign(this.$data, initialState());
                 this.refreshPage();

@@ -1,5 +1,6 @@
 var MongoClient = require('mongodb').MongoClient;
 var url = 'mongodb://kshetty:wvwCuUFBOuyguqxGckfbFzl0pYr5KF1PCwfEABefzGFzTaUNUPEpkK7udGPFJ7I2n8NMuHW7i3wNMJzZDKOHMA==@kshetty.mongo.cosmos.azure.com:10255/?ssl=true&appName=@kshetty@';
+var existingGameIds = [];
 var findWords = function(db, numWords, resultWords, callback) {
     var randomNum = Math.floor(Math.random() * 8);
     var type = String.fromCharCode(65+randomNum);
@@ -64,6 +65,10 @@ module.exports = function(app) {  //receiving "app" instance
                 var gameId = Number(body.id);
             } else {
                 var gameId = Math.floor((Math.random() * 1000) + 1);
+                while (existingGameIds.includes(gameId)) {
+                    gameId = Math.floor((Math.random() * 1000) + 1);
+                }
+                existingGameIds.push(gameId);
             }
             var db = client.db('gamesDB');
             db.collection('games').updateOne( {"id": gameId}, { $set: {
